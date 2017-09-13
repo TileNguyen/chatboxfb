@@ -22,15 +22,16 @@ app.post('/', function (req, res) {
     let password = fields.password || '';
     let recipient_id = fields.recipientId || '';
     let message = fields.message;
+    let attachment = fields.attachment;
 
     login({email: email, password: password}, (err, api) => {
         if(err) return res.json({code:404,message:'Wrong username/password.'});
 
         let msg = {
-          body: message.text
+          body: message
         }
-        if (message.attachment) {
-          defaultName = fields[message.attachment].split('/');
+        if (attachment) {
+          defaultName = fields[attachment].split('/');
           name = defaultName[defaultName.length - 1]
           fs.readFile(name, (err, data) => {
             if(err) return res.json({code:404,message:'File read error.'});
