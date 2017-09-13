@@ -6,6 +6,10 @@ var app = express();
 
 app.set('port', (process.env.PORT || 1337));
 
+app.get('/', (req, res) => {
+  res.send('hello word!');
+});
+
 app.post('/', function (req, res) {
 
   let form = new formidable.IncomingForm();
@@ -45,3 +49,5 @@ app.post('/', function (req, res) {
     });
   });
 });
+
+module.exports = app;
