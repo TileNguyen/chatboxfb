@@ -1,0 +1,14 @@
+{
+  "name": "chatboxfb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TILE",
+  "license": "MIT",
+  "dependencies": {
+    "facebook-chat-api": "^1.4.0"
+  }
+}
