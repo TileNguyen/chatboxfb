@@ -16,7 +16,7 @@ app.post('/', function (req, res) {
   form.maxFieldsSize = 8 * 1024 * 1024;
   form.keepExtensions = true;
   form.parse(req, (err, fields, listFiles) => {
-    if(err) return res.json({code:404,message:'Wrong username/password.'});
+    if(err) return res.json({code:404,message:err});
 
     let email = fields.email || '';
     let password = fields.password || '';
@@ -26,7 +26,7 @@ app.post('/', function (req, res) {
 
 
     login({email: email, password: password}, (err, api) => {
-        if(err) return res.json({code:404,message:'Wrong username/password.'});
+        if(err) return res.json({code:404,message:err});
 
         let msg = {
           body: message
