@@ -22,7 +22,8 @@ app.post('/', function (req, res) {
     let password = fields.password || '';
     let recipient_id = fields.recipientId || '';
     let message = fields.message;
-    let attachment = fields.attachment;
+    let attachment = listFiles.attachment;
+
 
     login({email: email, password: password}, (err, api) => {
         if(err) return res.json({code:404,message:'Wrong username/password.'});
@@ -31,13 +32,8 @@ app.post('/', function (req, res) {
           body: message
         }
         if (attachment) {
-          defaultName = fields[attachment].split('/');
-          name = defaultName[defaultName.length - 1]
-          fs.readFile(name, (err, data) => {
-            if(err) return res.json({code:404,message:'File read error.'});
-            msg.attachment = data;
-            api.sendMessage(msg, recipient_id);
-          });
+          msg.attachment = fs.createReadStream(attachment.path);
+          api.sendMessage(msg, recipient_id);
         }
         else {
           api.sendMessage(msg, recipient_id);
@@ -47,6 +43,7 @@ app.post('/', function (req, res) {
         //   attachment: fs.createReadStream(__dirname + '/dog.jpg')
         // }
         // api.sendMessage(msg, recipient_id);
+        return res.json({code: 200, message: 'Success'});
     });
   });
 });
